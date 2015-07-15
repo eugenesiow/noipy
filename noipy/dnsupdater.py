@@ -16,6 +16,7 @@ AVAILABLE_PLUGINS = {
     'dyn': 'DynDnsUpdater',
     'duck': 'DuckDnsUpdater',
     'generic': 'GenericDnsUpdater',
+    'wo': 'WOUpdater'
 }
 
 DEFAULT_PLUGIN = 'generic'
@@ -143,6 +144,24 @@ class DynDnsUpdater(DnsUpdaterPlugin):
     def _get_base_url(self):
         return "http://members.dyndns.org/nic/update?hostname={hostname}" \
                "&myip={ip}&wildcard=NOCHG&mx=NOCHG&backmx=NOCHG"
+
+
+class WOUpdater(DnsUpdaterPlugin):
+    """webobservatory.me DDNS provider plugin """
+
+    auth_type = "T"
+
+    @property
+    def hostname(self):
+        hostname = self._hostname
+        found = re.search(r'(.*?)\.webobservatory\.me', self._hostname)
+        if found:
+            hostname = found.group(1)
+        return hostname
+
+    def _get_base_url(self):
+        return "http://webobservatory.me/update?domain={hostname}" \
+               "&token={token}&ip={ip}"
 
 
 class DuckDnsUpdater(DnsUpdaterPlugin):
