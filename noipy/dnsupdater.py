@@ -160,7 +160,7 @@ class WOUpdater(DnsUpdaterPlugin):
         return hostname
 
     def _get_base_url(self):
-        return "http://webobservatory.me/update?domain={hostname}" \
+        return "https://webobservatory.me/update?domain={hostname}" \
                "&token={token}&ip={ip}"
 
 
